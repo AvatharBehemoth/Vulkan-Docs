@@ -1,0 +1,14 @@
+The workings of vkGetPhysicalDeviceSurfaceCapabilitiesKHR are unclearly described. 
+As is VkSurfaceCapabilitiesKHR 
+  * VkExtent2D                        currentExtent;
+    VkExtent2D                       minImageExtent;
+    VkExtent2D                       maxImageExtent; 
+    In Several API's there are calls to return the width and height of the window opened in the os. for use in resizing the window/surface dimensions.
+    This seemed not to be present in Vulkan. Yet frameworks like SDL2 (SDL_Vulkan_GetDrawableSize) had that capability as has OpenGL (glfwSetFramebufferSizeCallback).
+    
+    after quite some research https://stackoverflow.com/questions/59620313/how-is-the-size-of-a-surface-determined-in-vulkan answered the question.
+    The VkSurfaceCapabilitiesKHR struct has the extent members which seem to be continuously updated in the currentExtent.height and currentExtent.width. 
+    Please include that information in the Vulkan manual, it is information which new users should be able to find easily, yet now they cant. 
+    Because its not in the documentation
+    
+    Please note this is the first time i have opened an issue (at the request of Lunarg itself btw) 
